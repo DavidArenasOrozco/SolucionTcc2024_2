@@ -1,6 +1,7 @@
 package com.example.BODEGASTCCAPI.controladores;
 
 import com.example.BODEGASTCCAPI.modelos.Mercancia;
+import com.example.BODEGASTCCAPI.modelos.ZonaBodega;
 import com.example.BODEGASTCCAPI.modelos.dto.MercanciaDTO;
 import com.example.BODEGASTCCAPI.servicios.MercanciaServicio;
 
@@ -58,20 +59,21 @@ public class ControladorMercancia {
                     )
             }
     )
-    public ResponseEntity<?> LlamadoGuardarMercanciaDTO(@RequestBody Mercancia datosMercanciaEnviadosCliente){
-        try{
+    public ResponseEntity<Boolean> LlamadoGuardarMercanciaDTO(@RequestBody Mercancia datosMercanciaEnviadosCliente) {
+        try {
+            // Llama al servicio para almacenar la mercancía y devuelve true si se almacena correctamente
+            boolean resultado = this.mercanciaServicio.almacenarMercanciaDTO(datosMercanciaEnviadosCliente);
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(this.mercanciaServicio.almacenarMercanciaDTO(datosMercanciaEnviadosCliente));
-        }catch(Exception error){
-            HashMap<String, Object> mensajeRespuesta= new HashMap<>();
-            mensajeRespuesta.put("mensaje",error.getMessage());
+                    .body(resultado);
+        } catch (Exception error) {
+            // En caso de error, devuelve false indicando que no se pudo almacenar la mercancía
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
-                    .body(mensajeRespuesta);
+                    .body(false);
         }
-
     }
+
 
 
     @GetMapping()

@@ -1,5 +1,7 @@
 package com.example.BODEGASTCCAPI.modelos.dto;
 
+import com.example.BODEGASTCCAPI.modelos.ZonaBodega;
+
 import java.time.LocalDate;
 
 public class MercanciaDTO {
@@ -9,15 +11,18 @@ public class MercanciaDTO {
     private String direccion;
     private LocalDate fechaIngreso;
 
+    private ZonaBodega zonaBodega;
+
     public MercanciaDTO() {
     }
 
-    public MercanciaDTO(Double volumen, Double peso, String nombre, String direccion, LocalDate fechaIngreso) {
+    public MercanciaDTO(Double volumen, Double peso, String nombre, String direccion, LocalDate fechaIngreso, ZonaBodega zonaBodega) {
         this.volumen = volumen;
         this.peso = peso;
         this.nombre = nombre;
         this.direccion = direccion;
         this.fechaIngreso = fechaIngreso;
+        this.zonaBodega = zonaBodega;
     }
 
     public Double getVolumen() {
@@ -59,4 +64,14 @@ public class MercanciaDTO {
     public void setFechaIngreso(LocalDate fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
+
+    public ZonaBodega getZonaBodega() {
+        return zonaBodega;
+    }
+
+    public void setZonaBodega(ZonaBodega zonaBodega) {
+        this.zonaBodega = zonaBodega;
+    }
 }
+
+

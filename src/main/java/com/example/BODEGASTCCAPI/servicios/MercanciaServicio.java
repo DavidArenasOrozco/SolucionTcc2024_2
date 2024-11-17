@@ -1,8 +1,8 @@
 package com.example.BODEGASTCCAPI.servicios;
-
 import com.example.BODEGASTCCAPI.helpers.mensajes.Mensaje;
 import com.example.BODEGASTCCAPI.helpers.validaciones.MercanciaValidacion;
 import com.example.BODEGASTCCAPI.modelos.Mercancia;
+import com.example.BODEGASTCCAPI.modelos.ZonaBodega;
 import com.example.BODEGASTCCAPI.modelos.dto.MercanciaDTO;
 import com.example.BODEGASTCCAPI.modelos.mapas.IMapaMercancia;
 import com.example.BODEGASTCCAPI.repositorios.IMercanciaRepositorio;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -31,65 +32,63 @@ public class MercanciaServicio {
     @Autowired
     IMapaMercancia mapaMercancia;
 
+
     //guardar
 
-    public MercanciaDTO almacenarMercanciaDTO(Mercancia datosMercancia) throws Exception{
-        try{
+    public boolean almacenarMercanciaDTO(Mercancia datosMercancia) throws Exception {
 
-            //aplicar validaciones a los datos recibidos
-            //si sale bien la validacion llamo al repo para guardar los datos
-            if(!this.validacion.validarPeso(datosMercancia.getPeso())){
+        try {
+            if (datosMercancia.getPeso() != null &&!this.validacion.validarPeso(datosMercancia.getPeso())) {
                 throw new Exception(Mensaje.PESO_NEGATIVO.getMensaje());
             }
 
-            if(!this.validacion.validarVolumen(datosMercancia.getVolumen())){
+            if (!this.validacion.validarVolumen(datosMercancia.getVolumen())) {
                 throw new Exception(Mensaje.VOLUMEN_NEGATIVO.getMensaje());
 
             }
 
-            if(!this.validacion.validarFechas(datosMercancia.getFechaIngreso(), LocalDate.now())){
+            if (!this.validacion.validarFechas(datosMercancia.getFechaIngreso(), LocalDate.now())) {
                 throw new Exception(Mensaje.FECHA_INVALIDA.getMensaje());
             }
 
-            return this.mapaMercancia.mapearMercancia(this.repositorio.save(datosMercancia));
+             this.mapaMercancia.mapearMercancia(this.repositorio.save(datosMercancia));
+            return true;
 
-
-        }catch(Exception error){
+        } catch (Exception error) {
             throw new Exception(error.getMessage());
         }
     }
 
-    //buscar todos
-    public List<MercanciaDTO> buscarTodasMercancias() throws Exception{
-        try{
-            return  this.mapaMercancia.mapearListaMercancias(this.repositorio.findAll());
 
-        }catch(Exception error){
+    //buscar todos
+    public List<MercanciaDTO> buscarTodasMercancias() throws Exception {
+        try {
+            return this.mapaMercancia.mapearListaMercancias(this.repositorio.findAll());
+
+        } catch (Exception error) {
             throw new Exception(error.getMessage());
         }
     }
 
     //buscar por id
-    public Mercancia buscarMercanciaPorId(Integer idMercancia){
+    public Mercancia buscarMercanciaPorId(Integer idMercancia) {
         return null;
     }
 
     //buscar nombre
-    public Mercancia buscarMercanciaPorNombre(String nombreMercancia){
+    public Mercancia buscarMercanciaPorNombre(String nombreMercancia) {
         return null;
     }
 
     //modificar
-    public Mercancia modificarMercancia(Integer idMercancia, Mercancia datosMercancia){
+    public Mercancia modificarMercancia(Integer idMercancia, Mercancia datosMercancia) {
         return null;
     }
 
     //eliminar
-    public boolean eliminarMercancia(Integer idMercancia){
+    public boolean eliminarMercancia(Integer idMercancia) {
         return true;
     }
-
-
 
 
 }

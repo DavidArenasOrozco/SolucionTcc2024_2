@@ -1,5 +1,6 @@
 package com.example.BODEGASTCCAPI.modelos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -23,7 +24,7 @@ public class ZonaBodega {
     @Column(name = "capacidad_peso_ocupado", nullable = false)
     private Double capacidadPesoOcupado;
 
-    @OneToMany(mappedBy = "zonabodega")
+    @OneToMany(mappedBy = "zonaBodega")
     @JsonManagedReference
     private List<Mercancia> mercancias;
 
@@ -32,13 +33,14 @@ public class ZonaBodega {
     public ZonaBodega() {
     }
 
-    public ZonaBodega(Long idZona, String nombreZona, Double capacidadMaximaVolumen, Double capacidadMaximaPeso, Double capacidadVolumenOcupado, Double capacidadPesoOcupado) {
+    public ZonaBodega(Long idZona, String nombreZona, Double capacidadMaximaVolumen, Double capacidadMaximaPeso, Double capacidadVolumenOcupado, Double capacidadPesoOcupado, List<Mercancia> mercancias) {
         this.idZona = idZona;
         this.nombreZona = nombreZona;
         this.capacidadMaximaVolumen = capacidadMaximaVolumen;
         this.capacidadMaximaPeso = capacidadMaximaPeso;
         this.capacidadVolumenOcupado = capacidadVolumenOcupado;
         this.capacidadPesoOcupado = capacidadPesoOcupado;
+        this.mercancias = mercancias;
     }
 
     public Long getIdZona() {

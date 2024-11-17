@@ -1,10 +1,11 @@
 package com.example.BODEGASTCCAPI.modelos;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.UUID;
+;
 
 @Entity
 @Table(name = "mercancias")
@@ -40,12 +41,12 @@ public class Mercancia {
     @ManyToOne
     @JoinColumn(name="fk_zonabodega",referencedColumnName = "id_zona")
     @JsonBackReference
-    private ZonaBodega zonabodega;
+    private ZonaBodega zonaBodega;
 
     public Mercancia() {
     }
 
-    public Mercancia(Long iup, Double volumen, Double peso, String nombre, String tipoDestinatario, String nombreDestinatario, String departamento, String ciudad, String direccion, LocalDate fechaIngreso, LocalDate fechaSalida) {
+    public Mercancia(Long iup, Double volumen, Double peso, String nombre, String tipoDestinatario, String nombreDestinatario, String departamento, String ciudad, String direccion, LocalDate fechaIngreso, LocalDate fechaSalida, ZonaBodega zonaBodega) {
         this.iup = iup;
         this.volumen = volumen;
         this.peso = peso;
@@ -57,6 +58,7 @@ public class Mercancia {
         this.direccion = direccion;
         this.fechaIngreso = fechaIngreso;
         this.fechaSalida = fechaSalida;
+        this.zonaBodega = zonaBodega;
     }
 
     public Long getIup() {
@@ -145,5 +147,13 @@ public class Mercancia {
 
     public void setFechaSalida(LocalDate fechaSalida) {
         this.fechaSalida = fechaSalida;
+    }
+
+    public ZonaBodega getZonaBodega() {
+        return zonaBodega;
+    }
+
+    public void setZonaBodega(ZonaBodega zonaBodega) {
+        this.zonaBodega = zonaBodega;
     }
 }
